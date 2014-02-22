@@ -17,13 +17,14 @@ class Pinyin
     e: ['e', 'ē', 'é', 'ě', 'è'],
     i: ['i', 'ī', 'í', 'ǐ', 'ì'],
     o: ['o', 'ō', 'ó', 'ǒ', 'ò'],
+    u: ['u', 'ū', 'ú', 'ǔ', 'ù'],
     v: ['ü', 'ǖ', 'ǘ', 'ǚ', 'ǜ'],
     A: ['A', 'Ā', 'Á', 'Ă', 'À'],
     E: ['E', 'Ē', 'É', 'Ĕ', 'È'],
     O: ['O', 'Ō', 'Ó', 'Ŏ', 'Ò'],
   }
 
-  ACCENTS_STRING = "āēīōǖĀĒŌáéíóǘÁÉÓǎěǐǒǚĂĔŎàèìòǜÀÈÒ"
+  ACCENTS_STRING = "āēīōūǖĀĒŌáéíóúǘÁÉÓǎěǐǒǔǚĂĔŎàèìòùǜÀÈÒ"
   ACCENTS_PER_TONE = ACCENTS_STRING.length / 4
 
   # Array order matches that of COMBINATION_EXISTS
@@ -45,30 +46,30 @@ class Pinyin
   # All combination of initial + final that exists
   # Modified from source: http://en.wikipedia.org/wiki/Pinyin_table
   COMBINATION_EXISTS = [
-    [false, false, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, true, false, false, true, true, true, true, false, true, false, true, false, false],
-    [true, false, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, true, false, false, true, true, true, true, false, true, false, true, false, false],
-    [true, false, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, true, true, false, true, true, true, true, false, true, false, true, false, false],
-    [true, false, true, true, true, true, false, false, true, true, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false],
-    [true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, true, false, true, false, true, true, false, true, true, true, false, false],
-    [true, true, false, true, false, true, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, false, false, false, false, true, true, false, true, false, true, false, false],
-    [true, true, false, true, true, true, true, true, true, true, true, true, true, true, false, false, false, true, false, false, true, true, false, true, true, true, true, true, true, false, true, true, true],
-    [true, true, false, true, false, true, true, true, true, true, true, true, true, true, false, false, false, true, false, false, true, true, false, true, true, true, true, true, true, true, true, true, true],
-    [true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false],
-    [true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false],
-    [true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false],
-    [true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, true, false, false],
-    [true, true, false, true, true, false, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, true, false, false],
-    [true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, true, false, false],
-    [true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false],
-    [true, true, false, true, true, false, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false],
-    [true, true, false, true, true, false, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, false, false, false, false, true, false, false, false, false, true, false, false],
-    [true, true, false, true, true, false, true, true, true, true, false, false, true, true, true, false, false, true, false, true, true, false, false, false, false, false, false, false, false, false, true, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, true, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, true, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, true, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false],
-    [false, false, true, true, true, true, false, false, true, true, true, true, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false],
-    [true, true, false, false, false, false, true, true, true, true, false, true, false, true, false, true, false, true, false, false, true, false, false, true, true, false, false, false, false, false, true, false, false],
-    [true, false, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, true, false, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, true, false, false, true, true, true, true, false, true, false, true, false, false],
+    [true, false, true, false, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, true, false, false, true, true, true, true, false, true, false, true, false, false],
+    [true, false, true, false, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, true, true, false, true, true, true, true, false, true, false, true, false, false],
+    [true, false, true, false, true, true, true, false, false, true, true, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false],
+    [true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, true, false, true, false, true, true, false, true, true, true, false, false],
+    [true, true, false, false, true, false, true, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, false, false, false, false, true, true, false, true, false, true, false, false],
+    [true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false, false, true, false, false, true, true, false, true, true, true, true, true, true, false, true, true, true],
+    [true, true, false, false, true, false, true, true, true, true, true, true, true, true, true, false, false, false, true, false, false, true, true, false, true, true, true, true, true, true, true, true, true, true],
+    [true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false],
+    [true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false],
+    [true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false],
+    [true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, true, false, false],
+    [true, true, false, false, true, true, false, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, true, false, false],
+    [true, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, true, false, false],
+    [true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false],
+    [true, true, false, false, true, true, false, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false],
+    [true, true, false, false, true, true, false, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, false, false, false, false, true, false, false, false, false, true, false, false],
+    [true, true, false, false, true, true, false, true, true, true, true, false, false, true, true, true, false, false, true, false, true, true, false, false, false, false, false, false, false, false, false, true, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, true, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, true, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, true, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false],
+    [false, false, true, false, true, true, true, false, false, true, true, true, true, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false],
+    [true, true, false, false, false, false, false, true, true, true, true, false, true, false, true, false, true, false, true, false, false, true, false, false, true, true, false, false, false, false, false, true, false, false],
+    [true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
   ]
 
   # Public: Convert numbered pinyin string (e.g., "pin1yin2") to ones with
@@ -109,7 +110,7 @@ class Pinyin
   # Returns a numbered pinyin.
   def self.to_numbers(string)
     offset = 0
-    deaccented = string.tr(ACCENTS_STRING, 'aeiouAEO'*4)
+    deaccented = string.tr(ACCENTS_STRING, 'aeiouvAEO'*4)
 
     deaccented.gsub!(%r{
       (?<initial>#{INITIALS.join('|')})
@@ -156,7 +157,7 @@ class Pinyin
     return initial + final_with_accent
   end
 
-  def self.valid_word?(i, f)
+  def self.valid_word?(i, f, tone=nil)
     COMBINATION_EXISTS[INITIALS.index(i.downcase)][FINALS.index(f.downcase)]
   end
 
