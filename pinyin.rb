@@ -24,7 +24,7 @@ class Pinyin
   }
 
   ACCENTS_STRING = "āēīōǖĀĒŌáéíóǘÁÉÓǎěǐǒǚĂĔŎàèìòǜÀÈÒ"
-  NUM_ACCENTS_PER_TONE = ACCENTS_STRING.length / 4
+  ACCENTS_PER_TONE = ACCENTS_STRING.length / 4
 
   # Array order matches that of COMBINATION_EXISTS
   INITIALS = ['b', 'p', 'm', 'f',
@@ -83,19 +83,17 @@ class Pinyin
   #
   # Returns a pinyin with diacritics.
   def self.to_accents(string)
-    # u:, ü, v all mean the same thing. Convert for consistency
+    # u:, ü, v all mean the same thing
     string.gsub!(/(u:|ü)/, 'v')
 
-    # split words into syllables
-    # 'huan1ying' becomes [["h", "uan", "1"], ["y", "ing", nil]
-    syllables = string.scan(/(#{INITIALS * '|'})(#{FINALS * '|'})(\d)?/i)
-
-    syllables.each do |syllable; new_syll|
-      new_syll = valid_word?(*syllable) ? accent(*syllable) : syllable[0, 2].join
-      string.sub!(syllable.join, new_syll)
+    string.gsub!(%r{
+      (?<initial>#{INITIALS.join('|')})
+      (?<final>#{FINALS.join('|')})
+      (?<tone>\d)?
+    }xi) do
+      syllable = [$~[:initial], $~[:final], $~[:tone]]
+      valid_word?(*syllable) ? accent(*syllable) : syllable[0, 2].join
     end
-
-    string
   end
 
   # Public: Convert pinyin with diacritics (e.g., "pīnyīn") to numbered ones
@@ -110,19 +108,20 @@ class Pinyin
   #
   # Returns a numbered pinyin.
   def self.to_numbers(string)
-    sets = []
     offset = 0
     deaccented = string.tr(ACCENTS_STRING, 'aeiouAEO'*4)
 
-    deaccented.gsub!(/(?<i>#{INITIALS * '|'})(?<f>#{FINALS * '|'})/i) do
-      initial, final = $~[:i], $~[:f]
-      syllable = initial + final
+    deaccented.gsub!(%r{
+      (?<initial>#{INITIALS.join('|')})
+      (?<final>#{FINALS.join('|')})
+    }xi) do |syllable|
+      initial, final = $~[:initial], $~[:final]
       offset = deaccented.index(syllable, offset)
 
       accented_vowel = string[offset, syllable.length][/[#{ACCENTS_STRING}]/]
-      tone = ACCENTS_STRING.index(accented_vowel) / NUM_ACCENTS_PER_TONE + 1 if accented_vowel
+      tone = ACCENTS_STRING.index(accented_vowel) / ACCENTS_PER_TONE + 1 if accented_vowel
       
-      syllable += tone.to_s if accented_vowel && valid_word?(initial, final, nil)
+      syllable += tone.to_s if accented_vowel && valid_word?(initial, final)
 
       syllable
     end
@@ -157,7 +156,7 @@ class Pinyin
     return initial + final_with_accent
   end
 
-  def self.valid_word?(i, f, tone)
+  def self.valid_word?(i, f)
     COMBINATION_EXISTS[INITIALS.index(i.downcase)][FINALS.index(f.downcase)]
   end
 
